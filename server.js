@@ -9,7 +9,6 @@ const moment = require('moment');
 const app = express();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-// respond with "hello world" when a GET request is made to the homepage
 app.post('/', urlencodedParser, (req, res) => {
     const printJob = execSync(`${path.join(__dirname, '/bpac-barcode/bpac-barcode.exe')} "${req.body.title}" "${req.body.barcode}" "${req.body.timestamp}" ${req.body.copies}`);
     const ts = moment().format('YYYY-MM-DD HH:mm:ss');
