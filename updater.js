@@ -12,7 +12,7 @@ const gh = new GitHub({
 
 const bpacRepo = gh.getRepo('limenet/bpac-barcode');
 
-const desiredVersion = '^0.3.0';
+const desiredVersion = '^1.0.0';
 
 if (semver.validRange(desiredVersion) == null) {
     console.error('Invalid version');
