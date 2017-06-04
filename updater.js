@@ -38,6 +38,8 @@ if (fs.existsSync(lockfile)) {
             console.warn('Lockfile is outdated');
         }
     }
+} else {
+    console.info('No lockfile found');
 }
 
 bpacRepo.listReleases((error, data) => {
