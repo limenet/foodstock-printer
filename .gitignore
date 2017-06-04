@@ -2,3 +2,4 @@
 node_modules/
 bpac-barcode/
 daemon/
+bpac-barcode.lock
