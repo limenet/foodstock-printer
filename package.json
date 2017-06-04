@@ -2,11 +2,14 @@
   "dependencies": {
     "body-parser": "^1.15.1",
     "dotenv": "^4.0.0",
-    "download": "^5.0.0",
+    "download": "^6.0.0",
     "express": "^4.13.4",
-    "github-api": "^2.0.0",
+    "fs-extra": "^3.0.1",
+    "github-api": "^3.0.0",
     "moment": "^2.18.1",
-    "sync-exec": "^0.6.2"
+    "semver": "^5.3.0",
+    "sync-exec": "^0.6.2",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "eslint": "^3.19.0",

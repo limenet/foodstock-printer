@@ -4,11 +4,11 @@
         "import"
     ],
     "rules" : {
-        "indent": ["error", 4]
+        "indent": ["error", 4],
+        "no-console": ["off"]
     },
     "env": {
-        "node": true,
-        "console": true
+        "node": true
     },
     "globals": {
         "routeSpeakBarcode": false,
