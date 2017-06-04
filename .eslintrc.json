@@ -9,10 +9,5 @@
     },
     "env": {
         "node": true
-    },
-    "globals": {
-        "routeSpeakBarcode": false,
-        "routeSpeakText": false,
-        "routeSearchBarcodeAjax": false
     }
 }
