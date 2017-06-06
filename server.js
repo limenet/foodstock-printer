@@ -15,7 +15,7 @@ app.use(expressValidator({
             return param >= num;
         },
         isCode128(param) {
-            return /^[\x00-\x7F]*$/.test(param);
+            return /^[\x20-\x7F]*$/.test(param);
         },
         isDate(param) {
             return !isNaN(Date.parse(param));
