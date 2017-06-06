@@ -4,11 +4,11 @@
     "dotenv": "^4.0.0",
     "download": "^6.0.0",
     "express": "^4.13.4",
+    "express-validator": "^3.2.0",
     "fs-extra": "^3.0.1",
     "github-api": "^3.0.0",
     "moment": "^2.18.1",
     "semver": "^5.3.0",
-    "sync-exec": "^0.6.2",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
