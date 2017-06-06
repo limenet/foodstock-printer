@@ -6,8 +6,8 @@ const expressValidator = require('express-validator');
 const util = require('util');
 const bodyParser = require('body-parser');
 const moment = require('moment');
-
 const app = express();
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator({
     customValidators: {
