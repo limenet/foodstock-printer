@@ -66,7 +66,7 @@ bpacRepo.listReleases((error, data) => {
             }
         }
 
-        if (isLockfileOutdated || release.tag_name !== lockfileContents.actual) {
+        if (isLockfileOutdated || release.tag_name !== lockfileContents.actual || !fs.existsSync(outputPath)) {
             if (release && asset) {
                 const downloadUrl = asset.browser_download_url;
                 download(downloadUrl, outputPathTemp, {
