@@ -57,7 +57,6 @@ function findReleaseWithAsset(data) {
 bpacRepo.listReleases((error, data) => {
     if (!error) {
         const { release, asset } = findReleaseWithAsset(data);
-        console.log(release.tag_name, asset.name);
         if (isLockfileOutdated || release.tag_name !== lockfileContents.actual || !fs.existsSync(outputPath)) {
             if (release && asset) {
                 const downloadUrl = asset.browser_download_url;
