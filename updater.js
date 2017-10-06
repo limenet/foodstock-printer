@@ -43,42 +43,54 @@ if (fs.existsSync(lockfile)) {
 }
 
 function findReleaseWithAsset(data) {
+    const empty = { release: null, asset: null };
     // first find a semver-match
     // then check for a .zip asset
     const release = data
         .filter(r => semver.satisfies(r.tag_name, desiredVersion))
         .filter(r => r.assets.filter(a => a.name.endsWith('.zip')).length > 0)[0];
+
+    if (!release) {
+        return empty;
+    }
+
     const asset = release.assets
         .filter(a => a.name.endsWith('.zip'))[0];
+
+    if (!asset) {
+        return empty;
+    }
 
     return { release, asset };
 }
 
 bpacRepo.listReleases((error, data) => {
-    if (!error) {
-        const { release, asset } = findReleaseWithAsset(data);
-        if (isLockfileOutdated || release.tag_name !== lockfileContents.actual || !fs.existsSync(outputPath)) {
-            if (release && asset) {
-                const downloadUrl = asset.browser_download_url;
-                download(downloadUrl, outputPathTemp, {
-                    extract: true,
-                }).then(() => {
-                    console.info(`Downloaded and extracted bpac-barcode:${release.tag_name}.`);
-                    fs.removeSync(outputPath);
-                    fs.moveSync(outputPathTemp, outputPath);
-                    console.info('Replaced old with new version');
-                    fs.writeJson(lockfile, {
-                        desired: desiredVersion,
-                        actual: release.tag_name,
-                    }, 'utf8', () => {
-                        console.info('Wrote lock file');
-                    });
+    if (error) {
+        console.log(error);
+        return;
+    }
+    const { release, asset } = findReleaseWithAsset(data);
+    if (isLockfileOutdated || release.tag_name !== lockfileContents.actual || !fs.existsSync(outputPath)) {
+        if (release && asset) {
+            const downloadUrl = asset.browser_download_url;
+            download(downloadUrl, outputPathTemp, {
+                extract: true,
+            }).then(() => {
+                console.info(`Downloaded and extracted bpac-barcode:${release.tag_name}.`);
+                fs.removeSync(outputPath);
+                fs.moveSync(outputPathTemp, outputPath);
+                console.info('Replaced old with new version');
+                fs.writeJson(lockfile, {
+                    desired: desiredVersion,
+                    actual: release.tag_name,
+                }, 'utf8', () => {
+                    console.info('Wrote lock file');
                 });
-            } else {
-                console.error(`No matching release found for ${desiredVersion}`);
-            }
+            });
         } else {
-            console.info('bpac-barcode is up to date');
+            console.error(`No matching release found for ${desiredVersion}`);
         }
+    } else {
+        console.info('bpac-barcode is up to date');
     }
 });
