@@ -82,8 +82,7 @@ bpacRepo.listReleases((error, data) => {
             extract: true,
         }).then(() => {
             console.info(`Downloaded and extracted bpac-barcode:${release.tag_name}.`);
-            fs.removeSync(outputPath);
-            fs.moveSync(outputPathTemp, outputPath);
+            fs.moveSync(outputPathTemp, outputPath, { overwrite: true });
             console.info('Replaced old with new version');
             fs.writeJson(lockfile, {
                 desired: desiredVersion,
