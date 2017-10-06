@@ -42,30 +42,22 @@ if (fs.existsSync(lockfile)) {
     console.info('No lockfile found');
 }
 
+function findReleaseWithAsset(data) {
+    // first find a semver-match
+    // then check for a .zip asset
+    const release = data
+        .filter(r => semver.satisfies(r.tag_name, desiredVersion))
+        .filter(r => r.assets.filter(a => a.name.endsWith('.zip')).length > 0)[0];
+    const asset = release.assets
+        .filter(a => a.name.endsWith('.zip'))[0];
+
+    return { release, asset };
+}
+
 bpacRepo.listReleases((error, data) => {
     if (!error) {
-        let release = null;
-        let asset = null;
-
-        // first find a semver-match
-        // then check for a .zip asset
-        for (let i = 0; i < data.length; i += 1) {
-            const thisRelease = data[i];
-            if (semver.satisfies(thisRelease.tag_name, desiredVersion)) {
-                for (let j = 0; j < thisRelease.assets.length; j += 1) {
-                    const thisAsset = thisRelease.assets[j];
-                    if (thisAsset.name.substr(thisAsset.name.length - 4) === '.zip') {
-                        release = thisRelease;
-                        asset = thisAsset;
-                        break;
-                    }
-                }
-                if (release) {
-                    break;
-                }
-            }
-        }
-
+        const { release, asset } = findReleaseWithAsset(data);
+        console.log(release.tag_name, asset.name);
         if (isLockfileOutdated || release.tag_name !== lockfileContents.actual || !fs.existsSync(outputPath)) {
             if (release && asset) {
                 const downloadUrl = asset.browser_download_url;
