@@ -1,4 +1,4 @@
-const Service = require('node-windows').Service;
+const { Service } = require('node-windows');
 const path = require('path');
 
 const svc = new Service({
