@@ -15,9 +15,15 @@
   "devDependencies": {
     "eslint": "^4.8.0",
     "eslint-config-airbnb-base": "^12.0.2",
-    "eslint-plugin-import": "^2.7.0"
+    "eslint-plugin-import": "^2.7.0",
+    "mocha": "^4.0.1"
   },
   "scripts": {
-    "preinstall": "npm install -g node-windows && npm link node-windows"
+    "preinstall": "npm install -g node-windows && npm link node-windows",
+    "prepublish": "yarn run snyk-protect",
+    "snyk-protect": "snyk protect",
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha",
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec",
+    "unit": "./node_modules/.bin/mocha"
   }
 }
