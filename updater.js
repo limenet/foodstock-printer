@@ -67,12 +67,14 @@ function findReleaseWithAsset(data) {
 bpacRepo.listReleases((error, data) => {
     if (error) {
         console.log(error);
+        process.exit(1);
         return;
     }
 
     const { release, asset } = findReleaseWithAsset(data);
     if (!(release && asset)) {
         console.error(`No matching release found for ${desiredVersion}`);
+        process.exit(1);
         return;
     }
 
