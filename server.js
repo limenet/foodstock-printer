@@ -2,6 +2,7 @@ const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 const { exec } = require('child_process');
 const express = require('express');
+const os = require('os');
 const { check, validationResult } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
 const bodyParser = require('body-parser');
@@ -36,10 +37,10 @@ app.post('/', [
     return exec(`${path.join(__dirname, '/bpac-barcode/bpac-barcode.exe')} "${data.title}" "${data.barcode}" "${data.timestamp}" ${data.copies}`, (error, stdout, stderr) => {
         if (error) {
             console.error(ts(), data, 'Printing failed', { exitCode: error.code }, stderr);
-            res.status(500).send('Printing failed');
+            res.status(500).send(`Printing on ${os.hostname()} failed`);
         } else {
             console.log(ts(), data, 'Printed');
-            res.status(200).send('Printed');
+            res.status(200).send(`Printed on ${os.hostname()}`);
         }
     });
 });
