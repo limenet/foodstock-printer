@@ -5,15 +5,15 @@
     "download": "^6.2.5",
     "express": "^4.16.2",
     "express-validator": "^4.3.0",
-    "fs-extra": "^4.0.2",
+    "fs-extra": "^5.0.0",
     "github-api": "^3.0.0",
-    "moment": "^2.19.2",
+    "moment": "^2.20.1",
     "node-windows": "^0.1.14",
     "semver": "^5.4.1",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
-    "eslint": "^4.11.0",
+    "eslint": "^4.15.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0"
   },
