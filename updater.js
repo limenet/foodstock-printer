@@ -78,15 +78,15 @@ bpacRepo.listReleases((error, data) => {
   }
 
   if (
-    isLockfileOutdated ||
-    release.tag_name !== lockfileContents.actual ||
-    !fs.existsSync(outputPath)
+    isLockfileOutdated
+    || release.tag_name !== lockfileContents.actual
+    || !fs.existsSync(outputPath)
   ) {
     const downloadUrl = asset.browser_download_url;
     download(downloadUrl, outputPathTemp, {
       extract: true,
     }).then(() => {
-      console.info(`Downloaded and extracted bpac-barcode:${release.tag_name}.`,);
+      console.info(`Downloaded and extracted bpac-barcode:${release.tag_name}.`);
       fs.moveSync(outputPathTemp, outputPath, { overwrite: true });
       console.info('Replaced old with new version');
       fs.writeJson(
