@@ -43,20 +43,24 @@ app.post(
 
     const data = matchedData(req);
 
-    return exec(
-      `${path.join(__dirname, '/bpac-barcode/bpac-barcode.exe')} "${data.title}" "${
-        data.barcode
-      }" "${data.timestamp}" ${data.copies}`,
-      (error, stdout, stderr) => {
-        if (error) {
-          console.error(ts(), data, 'Printing failed', { exitCode: error.code }, stderr);
-          res.status(500).send(`Printing on ${os.hostname()} failed`);
-        } else {
-          console.log(ts(), data, 'Printed');
-          res.status(200).send(`Printed on ${os.hostname()}`);
-        }
-      },
-    );
+    const executable = path.join(__dirname, '/bpac-barcode/bpac-barcode.exe');
+    const args = `"${data.title}" "${data.barcode}" "${data.timestamp}" ${data.copies}`;
+    return exec(`${executable} ${args}`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(
+          '[%s]: %s\n%o\n%o\n%s',
+          ts(),
+          'Printing failed',
+          data,
+          { exitCode: error.code },
+          stderr,
+        );
+        res.status(500).send(`Printing on ${os.hostname()} failed`);
+      } else {
+        console.log('[%s]: %s\n%o', ts(), 'Printed', data);
+        res.status(200).send(`Printed on ${os.hostname()}`);
+      }
+    });
   },
 );
 
